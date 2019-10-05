@@ -324,7 +324,7 @@ let controller = (function(dataCtrl, UICtrl) {
         UICtrl.displayPosition();
         UICtrl.hideElement(DOM.startButton);
         UICtrl.showElement(DOM.restartButton);
-        UICtrl.showElement(DOM.clearButton);
+        // UICtrl.showElement(DOM.clearButton);
         dataCtrl.calculateMoves();
         dataCtrl.calculateLegalMoves();
         movingEventsListener();
