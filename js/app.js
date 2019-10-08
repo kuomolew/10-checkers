@@ -266,12 +266,11 @@ let UIController = (function() {
         showActivePlayer: function() {
             // document.getElementById('player').children.remove('.checker');
             let player = dataController.getDataBase().activePlayer;
-            console.log(player);
-            // if (player === 'white') {
-            //     document.getElementById('player').insertAdjacentHTML('afterbegin', DOMstrings.chekerBlackImage);
-            // } else {
-            //     document.getElementById('player').insertAdjacentHTML('afterbegin', DOMstrings.chekerWhiteImage);
-            // }
+            if (player === 'white') {
+                document.getElementById('active-player').src = 'img/white.png';
+            } else {
+                document.getElementById('active-player').src = 'img/black2.png';
+            }
             
         },
 
