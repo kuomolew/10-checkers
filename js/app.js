@@ -268,8 +268,12 @@ let UIController = (function() {
             let player = dataController.getDataBase().activePlayer;
             if (player === 'white') {
                 document.getElementById('active-player').src = 'img/white.png';
+                document.getElementById('board').classList.add('rotate-white');
+                document.getElementById('board').classList.remove('rotate-black');
             } else {
                 document.getElementById('active-player').src = 'img/black2.png';
+                document.getElementById('board').classList.add('rotate-black');
+                document.getElementById('board').classList.remove('rotate-white');
             }
             
         },
@@ -278,8 +282,6 @@ let UIController = (function() {
         getDOMstrings: function() {
             return DOMstrings;
         }
-
-        
     }
 
 }) ();

@@ -129,3 +129,13 @@ article {
     float: left;
     padding-left: 20px;
 }
+
+.rotate-black {
+    transform: rotate(180deg);
+    transition: 2s;
+}
+
+.rotate-white {
+    transform: rotate(0deg);
+    transition: 2s;
+}
