@@ -239,6 +239,42 @@ let UIController = (function() {
             }
         },
 
+        highLightSelectedChecker: function(position) {
+            let id =  DOMstrings.cellPrefix + position;
+            document.getElementById(id).classList.add('selected');
+        },
+
+        removeHighLightSelectedChecker: function(position) {
+            let id =  DOMstrings.cellPrefix + position;
+            document.getElementById(id).classList.remove('selected');
+        },
+
+        highLightPossibleMoves: function(positions) {
+            for (position of positions) {
+                let id =  DOMstrings.cellPrefix + position;
+                document.getElementById(id).classList.add('highlighted');
+            }
+        },
+
+        removeHighLightPossibleMoves: function(positions) {
+            for (position of positions) {
+                let id =  DOMstrings.cellPrefix + position;
+                document.getElementById(id).classList.remove('highlighted');
+            }
+        },
+
+        showActivePlayer: function() {
+            // document.getElementById('player').children.remove('.checker');
+            let player = dataController.getDataBase().activePlayer;
+            console.log(player);
+            // if (player === 'white') {
+            //     document.getElementById('player').insertAdjacentHTML('afterbegin', DOMstrings.chekerBlackImage);
+            // } else {
+            //     document.getElementById('player').insertAdjacentHTML('afterbegin', DOMstrings.chekerWhiteImage);
+            // }
+            
+        },
+
         // Returning list of domstrings
         getDOMstrings: function() {
             return DOMstrings;
@@ -280,6 +316,11 @@ let controller = (function(dataCtrl, UICtrl) {
             //If chosen checker is able to move in this position we are moving
             if (legalTargetPositions.includes(clickedID) && legalInitialPositions.includes(selectedID)) {
                 
+
+                //Remove selected highlight
+                UICtrl.removeHighLightSelectedChecker(selectedID);
+                UICtrl.removeHighLightPossibleMoves(legalTargetPositions);
+
                 //Write this move to database
                 dataCtrl.dataBaseMove(selectedID, clickedID);
 
@@ -294,6 +335,7 @@ let controller = (function(dataCtrl, UICtrl) {
 
                 //Changing of active player
                 dataCtrl.changeActivePlayer();
+                UICtrl.showActivePlayer();
 
                 // Calculate moves for the next player
                 dataCtrl.calculateMoves();
@@ -309,8 +351,14 @@ let controller = (function(dataCtrl, UICtrl) {
             if(clickedID) {
                 //If chosen cheker is able to move we are saving it's coordinates and waiting for valid position where to move
                 if (legalInitialPositions.includes(clickedID)) {
+                    if (selectedID !== -1) {
+                        UICtrl.removeHighLightSelectedChecker(selectedID);
+                        UICtrl.removeHighLightPossibleMoves(legalTargetPositions);
+                    }
                     selectedID = clickedID;
                     legalTargetPositions = db.legalMoves[selectedID];
+                    UICtrl.highLightSelectedChecker(selectedID);
+                    UICtrl.highLightPossibleMoves(legalTargetPositions);
                 }
             }
           });
@@ -322,6 +370,9 @@ let controller = (function(dataCtrl, UICtrl) {
         
         dataCtrl.setInitialArrangement();
         UICtrl.displayPosition();
+
+        UICtrl.showActivePlayer();
+        
         UICtrl.hideElement(DOM.startButton);
         UICtrl.showElement(DOM.restartButton);
         // UICtrl.showElement(DOM.clearButton);
